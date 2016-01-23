@@ -3,11 +3,62 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <link rel="stylesheet" href="src/bootstrap.min.css">
+    <link href="src/index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.css"/>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <!-- Start navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Datatron</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Upload <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Upload CSV</a></li>
+                <li><a href="#">Upload .xls</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End navbar -->
+
+
+  <div class='container'>
+    <div class='row'>
+      <div id="data-tab" class='col-xs-6'>
+        DATA
+
+        <!-- Upload form -->
+        <div id="dropzone" class="well">
+          <p>Upload csv files here</p>
+        </div>
+
+
+
+      </div>
+      <div class='col-xs-6'>
+        VISUALIZATION
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.js"></script>
+  <script type="text/javascript" src="http://filedropjs.org/filedrop.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="src/index.js"></script>
   </body>
 </html>
