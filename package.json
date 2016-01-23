@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/atom/electron-quick-start#readme",
   "dependencies": {
+    "machine_learning": "0.0.8",
     "node-bayes": "git+ssh://git@github.com/Leventhan/node-bayes.git"
   },
   "devDependencies": {
