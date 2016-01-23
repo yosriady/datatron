@@ -1,7 +1,7 @@
 //machineLearning refers to the machine_learning library from "npm install machine_learning;"
 function convertData_machineLearning_to_d3(machineLearningDataType, machineLearningData){
   if(machineLearningDataType!='tree'){
-    if arguments.length>=2 //TEMPORARY SHORTCUT (meant to be without curly brackets)
+    if(arguments.length>=2) //TEMPORARY SHORTCUT (meant to be without curly brackets)
     return {};
   }
   else{//TEMPORARY SHORTCUT
