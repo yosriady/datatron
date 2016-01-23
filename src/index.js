@@ -1,12 +1,14 @@
 var _ = require('underscore');
 var d3 = require('d3');
 var bayes = require('node-bayes');
+var ml = require('machine_learning');
 
 $(document).ready(function() {
     var zone = new FileDrop('dropzone', {input: false});
     var rawData;
     var parsedData = [];
     var naiveBayesClassifier;
+    var decisionTreeClassifier;
 
     // On Drag and Drop file upload
     zone.event('upload', function (e) {
@@ -18,22 +20,22 @@ $(document).ready(function() {
 
             // Typecast number strings to number
             _.each(rawData, function(sample){
-                var parsedSample = _.map(sample, function(attribute){
-                    var parsedAttribute;
-                    if (parsedAttribute = parseInt(attribute, 10)){
-                        return parsedAttribute;
-                    }
-                    return attribute;
-                });
+                var parsedSample = typecastNumbers(sample);
                 parsedData.push(parsedSample);
             });
 
             // Render the table
             $('#data_wrapper').remove();
-            var table = tabulate("data", parsedData.slice(1), parsedData[0]);
+            var columns = parsedData[0];
+            var table = tabulate("data", parsedData.slice(1), columns);
             $('#data').DataTable({pageLength: 25});
 
-            // Train classifier
+            // Render charts
+            _.each(columns, function(columnName, columnIndex){
+                pieChart("#data-visualization", columnName, _.pluck(parsedData, columnIndex));
+            });
+
+            // Train Naive Bayes classifier
             naiveBayesClassifier = new bayes.NaiveBayes({
               columns: parsedData[0],
               data: parsedData.slice(1),
@@ -41,7 +43,28 @@ $(document).ready(function() {
             });
             naiveBayesClassifier.train();
 
-            // Something else below
+            // Train Decision Tree
+            var dtDatas = _.map(parsedData.slice(1), function(sample){return sample.slice(0, sample.length -1)});
+            var dtResults = _.map(parsedData.slice(1), function(sample){return sample.slice(sample.length -1)});
+            decisionTreeClassifier = new ml.DecisionTree({
+                data : dtDatas,
+                result : dtResults
+            });
+            decisionTreeClassifier.build();
+            console.log(decisionTreeClassifier.tree);
+
+            // Render Decision Tree;
+            var d3TreeData = convertData_machineLearning_to_d3('tree', decisionTreeClassifier.tree);
+            createD3CollapsibleDecisionTree('#analyze-visualization', d3TreeData);
+
+
+            // render selects with id select-COLUMNNAME and options
+            // TOFIX: HACK
+            var blindColumns = _.without(columns, columns[columns.length - 1]);
+            console.log(blindColumns);
+            _.each(blindColumns, function(columnName, columnIndex){
+                var control = select(columnName, _.uniq(_.pluck(parsedData, columnIndex)));
+            })
 
           },
           function () { alert('Problem reading file.'); },
@@ -61,7 +84,63 @@ $(document).ready(function() {
       console.log(naiveBayesClassifier);
     });
 
+    $( "#predict-btn" ).click(function() {
+      var blindColumns = _.without(naiveBayesClassifier.columns, naiveBayesClassifier.columns[naiveBayesClassifier.columns.length -1]);
+      var sample = _.map(blindColumns, function(columnName){
+        var selectValue = $("#predict-"+columnName).val();
+        if (!_.isEqual(selectValue, columnName)) {
+            return selectValue;
+        } else {
+            return null;
+        }
+      })
+      sample = typecastNumbers(sample);
+      var probabilities = naiveBayesClassifier.predict(sample);
+      var answer = probabilities.answer;
+      delete probabilities['answer'];
+
+      // {No: 0.21428571428571427, Yes: 0.1590909090909091, answer: "No"}
+      // TODO: display vizualizations for each column after prediction
+      // TODO: also render VERDICT
+      var data = _.pairs(probabilities);
+      $("#predict-visualization h3").remove();
+      var chartContainer = d3.select("#predict-visualization")
+                           .append("div").attr("id", ("chart-answer"));
+      var chart = c3.generate({
+          bindto: ('#chart-answer'),
+          data: {
+              columns: data,
+              type : 'pie'
+          }
+      });
+      var answerHeading = d3.select("#predict-visualization").append("h3").attr("class", "text-center").text(answer);
+
+    });
+
 });
+
+function select(columnName, values) {
+    values.unshift(">Pick a " + columnName);
+    var dropDown = d3.select("#predict-tab")
+                    .append("select").attr("id", "predict-"+columnName).attr("class", "col-xs-3");
+    var options = dropDown.selectAll('option').data(values.slice(1)); // Data join
+    options.enter().append("option").text(function(d) { return d; });
+    return dropDown;
+}
+
+function pieChart(container_id, columnName, columnValues){
+    var chartContainer = d3.select(container_id)
+                         .append("div").attr("id", ("chart-"+columnName));
+    var columnValueCounts = _.countBy(columnValues.slice(1), _.identity);
+    var chart = c3.generate({
+        bindto: ('#chart-'+columnName),
+        data: {
+            columns: _.pairs(columnValueCounts),
+            type : 'pie'
+        }
+    });
+    return chart;
+}
 
 // Table generator
 function tabulate(table_id, data, columns) {
@@ -100,4 +179,14 @@ function tabulate(table_id, data, columns) {
             .text(function(d) { return d.value; });
 
     return table;
+}
+
+function typecastNumbers(sample){
+    return _.map(sample, function(attribute){
+        var parsedAttribute;
+        if (parsedAttribute = parseInt(attribute, 10)){
+            return parsedAttribute;
+        }
+        return attribute;
+    });
 }

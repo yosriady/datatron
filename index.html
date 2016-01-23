@@ -2,26 +2,30 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>DataTron | Data Analysis for Everyone</title>
     <link rel="stylesheet" href="src/bootstrap.min.css">
     <link href="src/index.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+    <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.css">
   </head>
   <body>
     <!-- Start navbar -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Datatron</a>
+          <a class="navbar-brand" href="#home"><i class="fa fa-cogs"></i> DataTron</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#home" data-toggle="tab">Data</a></li>
-            <li><a href="#predict" data-toggle="tab">Predict</a></li>
+            <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-table"></i> Data</a></li>
+            <li><a href="#analyze" data-toggle="tab"><i class="fa fa-code-fork"></i> Analyze</a></li>
+            <li><a href="#predict" data-toggle="tab"><i class="fa fa-lightbulb-o"></i> Predict</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
+            <li><a href="#"><i class="fa fa-info-circle"></i> About</a></li>
           </ul>
         </div>
       </div>
@@ -30,27 +34,47 @@
 
   <div class='container'>
     <div class="row">
+
+    <div class="alert alert-success" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <i class='fa fa-heart'></i> Hello and welcome to DataTron! Datatron is a personal data analytics platform for normal people like you and me! <strong>Our vision is to make data science and machine learning accessible to all, including your mom!</strong> DataTron is lovingly built in 24 hours on Javascript, Node, and Electron. We also wrote a Bayesian classifier ourselves!
+    </div>
+
     <div class="tab-content">
       <!-- Home Tab -->
       <div class="tab-pane fade active in" id="home">
           <div id="data-tab" class='col-xs-6'>
-            DATA
+            <i class="fa fa-table"></i> DATA
 
             <!-- Upload form -->
             <div id="dropzone" class="well">
-              <p>Upload csv files here</p>
+              <p><i class="fa fa-upload"></i> Drop csv files here</p>
             </div>
 
           </div>
-          <div class='col-xs-6'>
-            VISUALIZATION
+          <div id="data-visualization" class="col-xs-6">
+            <i class="fa fa-pie-chart"></i> VISUALIZATION
+            <!-- Dynamically generated -->
           </div>
+      </div>
+
+      <!-- Analyse Tab -->
+      <div class="tab-pane fade" id="analyze">
+        <div id="analyze-visualization" class='col-xs-12'>
+          <!-- decision tree visualization -->
+        </div>
       </div>
 
       <!-- Predict Tab -->
       <div class="tab-pane fade" id="predict">
-        <div class='col-xs-12'>
-          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+
+        <div id="predict-tab" class='col-xs-12 well'>
+          <!-- Dynamically generated -->
+          <button id="predict-btn" type="button" class="pull-right btn btn-primary"><i class="fa fa-lightbulb-o"></i> Predict</button>
+        </div>
+
+        <div id="predict-visualization" class='col-xs-12'>
+          <h3></h3>
         </div>
       </div>
     </div>
@@ -64,7 +88,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.js"></script>
   <script type="text/javascript" src="http://filedropjs.org/filedrop.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+  <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.js"></script>
   <script src="lib/machine_learning.min.js"></script>
+  <script src="src/convertData.js"></script>
   <script src="src/index.js"></script>
   </body>
 </html>

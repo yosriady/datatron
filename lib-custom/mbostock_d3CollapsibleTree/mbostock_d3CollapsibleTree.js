@@ -1,4 +1,4 @@
-function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded, isBoldFontForClassLabel){
+function createD3CollapsibleDecisionTree(container_querySelectorStr, dataInput, inputType, isExpanded, isBoldFontForClassLabel){
     var jsonSrcPath, jsonDataStr, jsonDataObj;
     if(!inputType || inputType=='data'){
       jsonDataObj = dataInput;
@@ -29,12 +29,13 @@ function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded, isBol
     var diagonal = d3.svg.diagonal()
         .projection(function(d) { return [d.y, d.x]; });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(container_querySelectorStr).append("svg")
         .attr("width", width + margin.right + margin.left)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    //CUSTOM
     switch(inputType){
       case 'data':
         processDataInput(null,dataInput); break;  ////d3.data(dataInput); break; //Note: d3.data is not a function --> d3.select('someElement').data([3,6,9]).style("font-size", function(d){ return d+"px"; });
@@ -43,7 +44,6 @@ function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded, isBol
       case "path":
         d3.json(dataInput, processDataInput); break;
     }
-
     ////d3.json(jsonPath,
     function processDataInput(error, flare) { ////"http://bl.ocks.org"+"/mbostock/raw/4063550/flare.json";
       if (error) throw error;
