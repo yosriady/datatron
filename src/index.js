@@ -1,8 +1,12 @@
+var _ = require('underscore');
 var d3 = require('d3');
+var bayes = require('node-bayes');
 
 $(document).ready(function() {
     var zone = new FileDrop('dropzone', {input: false});
-    var data;
+    var rawData;
+    var parsedData = [];
+    var naiveBayesClassifier;
 
     // On Drag and Drop file upload
     zone.event('upload', function (e) {
@@ -10,28 +14,58 @@ $(document).ready(function() {
         file.readData(
           function (str) {
             // Parse CSV
-            data = d3.csv.parseRows(str);
+            rawData = d3.csv.parseRows(str);
+
+            // Typecast number strings to number
+            _.each(rawData, function(sample){
+                var parsedSample = _.map(sample, function(attribute){
+                    var parsedAttribute;
+                    if (parsedAttribute = parseInt(attribute, 10)){
+                        return parsedAttribute;
+                    }
+                    return attribute;
+                });
+                parsedData.push(parsedSample);
+            });
+
             // Render the table
-            var table = tabulate(data.slice(1), data[0]);
+            $('#data_wrapper').remove();
+            var table = tabulate("data", parsedData.slice(1), parsedData[0]);
             $('#data').DataTable({pageLength: 25});
+
+            // Train classifier
+            naiveBayesClassifier = new bayes.NaiveBayes({
+              columns: parsedData[0],
+              data: parsedData.slice(1),
+              verbose: true
+            });
+            naiveBayesClassifier.train();
+
+            // Something else below
+
           },
           function () { alert('Problem reading file.'); },
           'text'
         );
       });
-
-
-      // After data load
-
-
-
-
     });
+
+    // Add new listeners
+    $( "#nav-data" ).click(function() {
+      alert( "Handler for .click() called." );
+      console.log(naiveBayesClassifier);
+    });
+
+    $( "#nav-predict" ).click(function() {
+      alert( "Handler for .click() called." );
+      console.log(naiveBayesClassifier);
+    });
+
 });
 
 // Table generator
-function tabulate(data, columns) {
-    var table = d3.select("#data-tab").append("table").attr("id", "data").attr("class", "table table-striped table-hover"),
+function tabulate(table_id, data, columns) {
+    var table = d3.select("#data-tab").append("table").attr("id", table_id).attr("class", "table table-striped table-hover"),
         thead = table.append("thead"),
         tbody = table.append("tbody");
 
