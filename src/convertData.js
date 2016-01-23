@@ -8,7 +8,6 @@ function convertData_machineLearning_to_d3(machineLearningDataType, machineLearn
   }
 
   //machineLearningData has {data:Array, result:Array, tree:Object}
-  console.log(machineLearningData)
   var machineLearningData_tree = machineLearningData.tree?  machineLearningData.tree: machineLearningData;
   //Future: check if col,value,results,tb,fb exist
 
