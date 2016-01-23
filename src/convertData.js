@@ -2,13 +2,13 @@
 function convertData_machineLearning_to_d3(machineLearningDataType, machineLearningData){
   if(machineLearningDataType!='tree'){
     if(arguments.length>=2) //TEMPORARY SHORTCUT (meant to be without curly brackets)
-    return {};
-  }
-  else{//TEMPORARY SHORTCUT
+      return {};
+    //else //TEMPORARY SHORTCUT
     machineLearningData = arguments[0];
   }
 
   //machineLearningData has {data:Array, result:Array, tree:Object}
+  console.log(machineLearningData)
   var machineLearningData_tree = machineLearningData.tree?  machineLearningData.tree: machineLearningData;
   //Future: check if col,value,results,tb,fb exist
 
