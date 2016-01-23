@@ -18,7 +18,7 @@ function convertData_machineLearning_to_d3(machineLearningDataType, machineLearn
 }
 
 function transformAttributes(nodeName, src_machineLearningTreeData, dst_d3TreeData){
-  console.log(nodeName, src_machineLearningTreeData, dst_d3TreeData);
+  // console.log(nodeName, src_machineLearningTreeData, dst_d3TreeData);
   dst_d3TreeData.name = dst_d3TreeData.name ||nodeName;
   if(src_machineLearningTreeData['tb'] || src_machineLearningTreeData['fb']){
     dst_d3TreeData.children = dst_d3TreeData.children ||[]; //define .children as an array if there is no .children defined yet --> need to check and avoid overwrites because this function is likely called twice for each level due to recursion
