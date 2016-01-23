@@ -32,9 +32,10 @@
 var mlTreeData = JSON.parse('{"col":0,"value":"google","tb":{"col":3,"value":"21","tb":{"col":-1,"results":{"Premium":3}},"fb":{"col":2,"value":"no","tb":{"col":-1,"results":{"None":1}},"fb":{"col":-1,"results":{"Basic":1}}}},"fb":{"col":0,"value":"slashdot","tb":{"col":-1,"results":{"None":3}},"fb":{"col":2,"value":"yes","tb":{"col":-1,"results":{"Basic":4}},"fb":{"col":3,"value":"21","tb":{"col":-1,"results":{"Basic":1}},"fb":{"col":-1,"results":{"None":3}}}}}}');
 
 var d3TreeData = convertData_machineLearning_to_d3('tree', mlTreeData);
-createD3CollapsibleDecisionTree(d3TreeData);
 
+// createD3CollapsibleDecisionTree(d3TreeData); //collapsed decision tree
+createD3CollapsibleDecisionTree(d3TreeData,'data',true);//fully expanded decision tree
     </script>
-    
+
   </body>
 </html>

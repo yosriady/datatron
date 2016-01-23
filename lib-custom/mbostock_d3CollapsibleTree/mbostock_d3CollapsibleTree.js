@@ -1,4 +1,4 @@
-function createD3CollapsibleDecisionTree(dataInput, inputType){
+function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded){
     var jsonSrcPath, jsonDataStr, jsonDataObj;
     if(!inputType || inputType=='data'){
       jsonDataObj = dataInput;
@@ -56,7 +56,9 @@ function createD3CollapsibleDecisionTree(dataInput, inputType){
         }
       }
 
-      root.children.forEach(collapse);
+      if(!isExpanded){//CUSTOM: start as collapsed(default) or expanded(if specified)
+        root.children.forEach(collapse);
+      }
       update(root);
     }; ////});
 
