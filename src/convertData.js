@@ -12,11 +12,11 @@ function convertData_machineLearning_to_d3(machineLearningDataType, machineLearn
   //Future: check if col,value,results,tb,fb exist
 
   var d3_decisionTree_tree = {};
-  transformAttributes("START", machineLearningData_tree, d3_decisionTree_tree);
+  transformAttributes_machineLearning_to_d3("START", machineLearningData_tree, d3_decisionTree_tree);
   return d3_decisionTree_tree;
 }
 
-function transformAttributes(nodeName, src_machineLearningTreeData, dst_d3TreeData){
+function transformAttributes_machineLearning_to_d3(nodeName, src_machineLearningTreeData, dst_d3TreeData){
   // console.log(nodeName, src_machineLearningTreeData, dst_d3TreeData);
   dst_d3TreeData.name = dst_d3TreeData.name ||nodeName;
   if(src_machineLearningTreeData['tb'] || src_machineLearningTreeData['fb']){
@@ -55,8 +55,61 @@ function transformAttributes(nodeName, src_machineLearningTreeData, dst_d3TreeDa
     dst_d3TreeData.children.push(d3Data_childNode);
 
     var childNodeName = "Attribute: "+  (branchName=='tb'?  '': "NOT ")+src_machineLearningTreeData.value;//  +" [col"+src_machineLearningTreeData.col+"]";
-    transformAttributes(childNodeName, src_machineLearningTreeData[branchName], d3Data_childNode);
+    transformAttributes_machineLearning_to_d3(childNodeName, src_machineLearningTreeData[branchName], d3Data_childNode);
   });
+}
+
+
+
+function supplementData_machineLearning(machineLearningDataType, machineLearningData){
+  if(machineLearningDataType!='tree'){
+    if(arguments.length>=2) //TEMPORARY SHORTCUT (meant to be without curly brackets)
+      return {};
+    //else //TEMPORARY SHORTCUT
+    machineLearningData = arguments[0];
+  }
+
+  //machineLearningData has {data:Array, result:Array, tree:Object}
+  var machineLearningData_tree = machineLearningData.tree?  machineLearningData.tree: machineLearningData;
+  //Future: check if col,value,results,tb,fb exist
+
+  add_calculate_cumulativeChildNodesMemberCount(machineLearningData_tree);
+  //Future: add_calculate_informationGain
+  return machineLearningData;
+}
+
+//Future: Refactor. This function is very similar to the first function
+function add_calculate_cumulativeChildNodesMemberCount(machineLearningTreeNode){
+  var cumulativeChildNodesMemberCount = 0;
+
+  if(machineLearningTreeNode['tb']){  cumulativeChildNodesMemberCount += add_calculate_cumulativeChildNodesMemberCount(machineLearningTreeNode['tb']);  }
+  if(machineLearningTreeNode['fb']){  cumulativeChildNodesMemberCount += add_calculate_cumulativeChildNodesMemberCount(machineLearningTreeNode['fb']);  }
+  if(!(machineLearningTreeNode['tb'] || machineLearningTreeNode['fb'])){
+    if(cumulativeChildNodesMemberCount>0){console.warn("machine_learning member count");}
+    treeLeafNode_classLabelResults = machineLearningTreeNode['results'];
+
+    var finalClassMemberCount = -1; //initially set as an invalid count number
+    for(var classLabelName in treeLeafNode_classLabelResults){
+      var classMemberCount = treeLeafNode_classLabelResults[classLabelName];
+
+      if(finalClassMemberCount!=null && finalClassMemberCount!=classMemberCount){
+        console.warn(classLabelName,":","finalClassMemberCount != classMemberCount -->",finalClassMemberCount,classMemberCount);
+      }
+      if(classMemberCount>=finalClassMemberCount){
+        finalClassMemberCount = classMemberCount;
+      }
+    }
+    cumulativeChildNodesMemberCount = finalClassMemberCount;
+  }
+  machineLearningTreeNode['cumulativeChildNodesMemberCount'] = cumulativeChildNodesMemberCount;
+  return cumulativeChildNodesMemberCount;
+}
+
+function add_calculate_informationGain(machineLearningTreeNode){
+}
+function formula_decisionTree_informationGain(){
+}
+function formula_decisionTree_informationGainRatio(){
 }
 
 

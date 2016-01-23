@@ -2,14 +2,16 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>DataTron - D3 Tester</title>
     <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
+
+    <!-- <h1>Hello World!</h1>
     We are using node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    and Electron <script>document.write(process.versions.electron)</script>. -->
+    <h1>DataTron - D3 Tester</h1>
 
     <!-- Machine Learning  https://github.com/junku901/machine_learning -->
     <script src="lib/machine_learning.min.js"></script>
@@ -36,6 +38,10 @@ var d3TreeData = convertData_machineLearning_to_d3('tree', mlTreeData);
 // createD3CollapsibleDecisionTree("body", d3TreeData); //collapsed decision tree
 // createD3CollapsibleDecisionTree("body", d3TreeData,'data',true);//fully expanded decision tree
 createD3CollapsibleDecisionTree("body", d3TreeData,'data',true,true);//fully expanded decision tree  //bolded class label
+
+console.log(
+    supplementData_machineLearning('tree',mlTreeData)
+);
     </script>
 
   </body>
