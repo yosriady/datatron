@@ -2,26 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>DataTron | Data Analysis for Everyone</title>
     <link rel="stylesheet" href="src/bootstrap.min.css">
     <link href="src/index.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   </head>
   <body>
     <!-- Start navbar -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Datatron</a>
+          <a class="navbar-brand" href="#home"><i class="fa fa-cog"></i> Datatron</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="#home" data-toggle="tab">Data</a></li>
-            <li><a href="#predict" data-toggle="tab">Predict</a></li>
+            <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-table"></i> Data</a></li>
+            <li><a href="#predict" data-toggle="tab"><i class="fa fa-lightbulb-o"></i> Predict</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">About</a></li>
+            <li><a href="#"><i class="fa fa-info-circle"></i> About</a></li>
           </ul>
         </div>
       </div>
@@ -34,7 +35,7 @@
       <!-- Home Tab -->
       <div class="tab-pane fade active in" id="home">
           <div id="data-tab" class='col-xs-6'>
-            DATA
+            <i class="fa fa-table"></i> DATA
 
             <!-- Upload form -->
             <div id="dropzone" class="well">
@@ -43,12 +44,20 @@
 
           </div>
           <div class='col-xs-6'>
-            VISUALIZATION
+            <i class="fa fa-pie-chart"></i> VISUALIZATION
           </div>
       </div>
 
       <!-- Predict Tab -->
       <div class="tab-pane fade" id="predict">
+
+        <div id="predict-tab" class='col-xs-12 well'>
+          <!-- Dynamically generated -->
+          <button id="predict-btn" type="button" class="pull-right btn btn-primary">Predict</button>
+        </div>
+
+
+
         <div class='col-xs-12'>
           <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
         </div>
