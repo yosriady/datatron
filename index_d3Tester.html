@@ -22,6 +22,7 @@
         <!-- <script src="lib/d3.v3.min.js"></script> -->
 
     <!-- Custom Library -->
+    <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3SVGGeometricZooming.js"></script>
     <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.js"></script>
 
     <!-- Scripts -->
@@ -38,6 +39,8 @@ var d3TreeData = convertData_machineLearning_to_d3('tree', mlTreeData);
 // var d3TreeSVG = createD3CollapsibleDecisionTree("body", d3TreeData); //collapsed decision tree
 // var d3TreeSVG = createD3CollapsibleDecisionTree("body", d3TreeData,'data',true);//fully expanded decision tree
 var d3TreeSVG = createD3CollapsibleDecisionTree("body", d3TreeData,'data',true,true);//fully expanded decision tree  //bolded class label
+
+addD3SVGZoom(d3TreeSVG);
 
 console.log(
     supplementData_machineLearning('tree',mlTreeData)
