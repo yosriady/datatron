@@ -28,6 +28,11 @@ $(document).ready(function() {
             var table = tabulate("data", parsedData.slice(1), columns);
             $('#data').DataTable({pageLength: 25});
 
+            // Render charts
+            _.each(columns, function(columnName, columnIndex){
+                pieChart("#data-visualization", columnName, _.pluck(parsedData, columnIndex));
+            });
+
             // Train classifier
             naiveBayesClassifier = new bayes.NaiveBayes({
               columns: parsedData[0],
@@ -65,7 +70,6 @@ $(document).ready(function() {
 
     $( "#predict-btn" ).click(function() {
       var blindColumns = _.without(naiveBayesClassifier.columns, naiveBayesClassifier.columns[naiveBayesClassifier.columns.length -1]);
-      console.log(blindColumns);
       var sample = _.map(blindColumns, function(columnName){
         var selectValue = $("#predict-"+columnName).val();
         if (!_.isEqual(selectValue, columnName)) {
@@ -75,8 +79,26 @@ $(document).ready(function() {
         }
       })
       sample = typecastNumbers(sample);
-      console.log(naiveBayesClassifier.predict(sample));
-      // TODO: display vizualizations
+      var probabilities = naiveBayesClassifier.predict(sample);
+      var answer = probabilities.answer;
+      delete probabilities['answer'];
+
+      // {No: 0.21428571428571427, Yes: 0.1590909090909091, answer: "No"}
+      // TODO: display vizualizations for each column after prediction
+      // TODO: also render VERDICT
+      var data = _.pairs(probabilities);
+      $("#predict-visualization h3").remove();
+      var chartContainer = d3.select("#predict-visualization")
+                           .append("div").attr("id", ("chart-answer"));
+      var chart = c3.generate({
+          bindto: ('#chart-answer'),
+          data: {
+              columns: data,
+              type : 'pie'
+          }
+      });
+      var answerHeading = d3.select("#predict-visualization").append("h3").attr("class", "text-center").text(answer);
+
     });
 
 });
@@ -88,6 +110,20 @@ function select(columnName, values) {
     var options = dropDown.selectAll('option').data(values.slice(1)); // Data join
     options.enter().append("option").text(function(d) { return d; });
     return dropDown;
+}
+
+function pieChart(container_id, columnName, columnValues){
+    var chartContainer = d3.select(container_id)
+                         .append("div").attr("id", ("chart-"+columnName));
+    var columnValueCounts = _.countBy(columnValues.slice(1), _.identity);
+    var chart = c3.generate({
+        bindto: ('#chart-'+columnName),
+        data: {
+            columns: _.pairs(columnValueCounts),
+            type : 'pie'
+        }
+    });
+    return chart;
 }
 
 // Table generator
