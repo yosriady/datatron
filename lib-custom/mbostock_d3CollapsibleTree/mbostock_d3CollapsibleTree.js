@@ -1,4 +1,4 @@
-function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded){
+function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded, isBoldFontForClassLabel){
     var jsonSrcPath, jsonDataStr, jsonDataObj;
     if(!inputType || inputType=='data'){
       jsonDataObj = dataInput;
@@ -7,6 +7,10 @@ function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded){
     else{
       if(inputType=='str'){} //Future: handle json str
       else if(inputType=='path' || inputType=='url'){} //Future: handle json path
+    }
+
+    if(typeof isBoldFontForClassLabel=='undefined'){
+      isBoldFontForClassLabel = true;
     }
 
     //This Library is based on mbostock d3CollapsibleTree
@@ -97,17 +101,21 @@ function createD3CollapsibleDecisionTree(dataInput, inputType, isExpanded){
       //CUSTOM: additional caption display
       nodeEnter.append("text")
           .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-          .attr("dy", "1.35em")
+          .attr("dy", "1.35em") //Future: dynamically set larger font size based on original font size
           .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
           .text(function(d) { return d.classLabelsText; })
-          .style("fill-opacity", 1e-6);
+          .style("fill-opacity", 1e-6)
+          // .style("font-size", function(d){return "1em"}) //Future: dynamically set larger font size based on original font size
+          .style("font-weight", isBoldFontForClassLabel? "bold":"initial" );
       //CUSTOM: additional caption display
       nodeEnter.append("text")
           .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-          .attr("dy", "2.35em")
-          .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+          .attr("dy", "2.35em") //Future: dynamically set larger font size based on original font size
+          .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; }) //Future: dynamically set larger font size based on original font size
           .text(function(d) { return d.classMemberCount; })
-          .style("fill-opacity", 1e-6);
+          .style("fill-opacity", 1e-6)
+          // .style("font-size", function(d){return "1em"}) //Future: dynamically set larger font size based on original font size
+          .style("font-weight", isBoldFontForClassLabel? "bold":"initial" );
 
 
       // Transition nodes to their new position.
