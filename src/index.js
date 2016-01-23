@@ -21,7 +21,9 @@ $(document).ready(function() {
             // Typecast number strings to number
             _.each(rawData, function(sample){
                 var parsedSample = typecastNumbers(sample);
-                parsedData.push(parsedSample);
+                // Turn ON/OFF typecasting
+                // parsedData.push(parsedSample);
+                parsedData.push(sample);
             });
 
             // Render the table
@@ -36,6 +38,7 @@ $(document).ready(function() {
             });
 
             // Train Naive Bayes classifier
+            console.log(parsedData[0]);
             naiveBayesClassifier = new bayes.NaiveBayes({
               columns: parsedData[0],
               data: parsedData.slice(1),
@@ -56,7 +59,6 @@ $(document).ready(function() {
             // Render Decision Tree;
             var d3TreeData = convertData_machineLearning_to_d3('tree', decisionTreeClassifier.tree);
             createD3CollapsibleDecisionTree('#analyze-visualization', d3TreeData,'data', true);
-
 
             // render selects with id select-COLUMNNAME and options
             // TOFIX: HACK
@@ -103,17 +105,17 @@ $(document).ready(function() {
       // TODO: display vizualizations for each column after prediction
       // TODO: also render VERDICT
       var data = _.pairs(probabilities);
-      $("#predict-visualization h3").remove();
+      var randomKey = Math.random().toString(36).substring(7);
       var chartContainer = d3.select("#predict-visualization")
-                           .append("div").attr("id", ("chart-answer"));
+                           .append("div").attr("id", ("chart-answer-"+randomKey));
       var chart = c3.generate({
-          bindto: ('#chart-answer'),
+          bindto: ('#chart-answer-'+randomKey),
           data: {
               columns: data,
               type : 'pie'
           }
       });
-      var answerHeading = d3.select("#predict-visualization").append("h3").attr("class", "text-center").text(answer);
+      var answerHeading = d3.select("#predict-visualization").append("h3").attr("class", "text-center").text(sample);
 
     });
 
