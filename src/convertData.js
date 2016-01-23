@@ -12,11 +12,11 @@ function convertData_machineLearning_to_d3(machineLearningDataType, machineLearn
   //Future: check if col,value,results,tb,fb exist
 
   var d3_decisionTree_tree = {};
-  transformAttributes("START", machineLearningData_tree, d3_decisionTree_tree);
+  transformAttributes_machineLearning_to_d3("START", machineLearningData_tree, d3_decisionTree_tree);
   return d3_decisionTree_tree;
 }
 
-function transformAttributes(nodeName, src_machineLearningTreeData, dst_d3TreeData){
+function transformAttributes_machineLearning_to_d3(nodeName, src_machineLearningTreeData, dst_d3TreeData){
   // console.log(nodeName, src_machineLearningTreeData, dst_d3TreeData);
   dst_d3TreeData.name = dst_d3TreeData.name ||nodeName;
   if(src_machineLearningTreeData['tb'] || src_machineLearningTreeData['fb']){
@@ -55,7 +55,7 @@ function transformAttributes(nodeName, src_machineLearningTreeData, dst_d3TreeDa
     dst_d3TreeData.children.push(d3Data_childNode);
 
     var childNodeName = "Attribute: "+  (branchName=='tb'?  '': "NOT ")+src_machineLearningTreeData.value;//  +" [col"+src_machineLearningTreeData.col+"]";
-    transformAttributes(childNodeName, src_machineLearningTreeData[branchName], d3Data_childNode);
+    transformAttributes_machineLearning_to_d3(childNodeName, src_machineLearningTreeData[branchName], d3Data_childNode);
   });
 }
 
