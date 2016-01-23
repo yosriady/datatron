@@ -33,7 +33,6 @@
     </nav>
     <!-- End navbar -->
 
-
   <div class='container'>
     <div class='row'>
       <div id="data-tab" class='col-xs-6'>
@@ -44,8 +43,6 @@
           <p>Upload csv files here</p>
         </div>
 
-
-
       </div>
       <div class='col-xs-6'>
         VISUALIZATION
@@ -54,11 +51,13 @@
   </div>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script>
+    window.$ = window.jQuery = require('jquery');
+  </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.js"></script>
   <script type="text/javascript" src="http://filedropjs.org/filedrop.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="lib/machine_learning.min.js"></script>
   <script src="src/index.js"></script>
   </body>
 </html>

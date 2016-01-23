@@ -1,5 +1,8 @@
+var d3 = require('d3');
+
 $(document).ready(function() {
     var zone = new FileDrop('dropzone', {input: false});
+    var data;
 
     // On Drag and Drop file upload
     zone.event('upload', function (e) {
@@ -7,8 +10,7 @@ $(document).ready(function() {
         file.readData(
           function (str) {
             // Parse CSV
-            var data = d3.csv.parseRows(str);
-
+            data = d3.csv.parseRows(str);
             // Render the table
             var table = tabulate(data.slice(1), data[0]);
             $('#data').DataTable({pageLength: 25});
@@ -17,10 +19,17 @@ $(document).ready(function() {
           'text'
         );
       });
-    });
 
+
+      // After data load
+
+
+
+
+    });
 });
 
+// Table generator
 function tabulate(data, columns) {
     var table = d3.select("#data-tab").append("table").attr("id", "data").attr("class", "table table-striped table-hover"),
         thead = table.append("thead"),
