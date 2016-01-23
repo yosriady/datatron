@@ -1,12 +1,14 @@
 var _ = require('underscore');
 var d3 = require('d3');
 var bayes = require('node-bayes');
+var ml = require('machine_learning');
 
 $(document).ready(function() {
     var zone = new FileDrop('dropzone', {input: false});
     var rawData;
     var parsedData = [];
     var naiveBayesClassifier;
+    var decisionTreeClassifier;
 
     // On Drag and Drop file upload
     zone.event('upload', function (e) {
@@ -33,14 +35,28 @@ $(document).ready(function() {
                 pieChart("#data-visualization", columnName, _.pluck(parsedData, columnIndex));
             });
 
-            // Train classifier
+            // Train Naive Bayes classifier
             naiveBayesClassifier = new bayes.NaiveBayes({
               columns: parsedData[0],
               data: parsedData.slice(1),
               verbose: true
             });
             naiveBayesClassifier.train();
-            console.log(naiveBayesClassifier);
+
+            // Train Decision Tree
+            var dtDatas = _.map(parsedData.slice(1), function(sample){return sample.slice(0, sample.length -1)});
+            var dtResults = _.map(parsedData.slice(1), function(sample){return sample.slice(sample.length -1)});
+            decisionTreeClassifier = new ml.DecisionTree({
+                data : dtDatas,
+                result : dtResults
+            });
+            decisionTreeClassifier.build();
+            console.log(decisionTreeClassifier.tree);
+
+            // Render Decision Tree;
+            var d3TreeData = convertData_machineLearning_to_d3('tree', decisionTreeClassifier.tree);
+            createD3CollapsibleDecisionTree('#analyze-visualization', d3TreeData);
+
 
             // render selects with id select-COLUMNNAME and options
             // TOFIX: HACK

@@ -1,4 +1,4 @@
-function createD3CollapsibleDecisionTree(dataInput, inputType){
+function createD3CollapsibleDecisionTree(container_id, dataInput, inputType){
     var jsonSrcPath, jsonDataStr, jsonDataObj;
     if(!inputType || inputType=='data'){
       jsonDataObj = dataInput;
@@ -25,7 +25,7 @@ function createD3CollapsibleDecisionTree(dataInput, inputType){
     var diagonal = d3.svg.diagonal()
         .projection(function(d) { return [d.y, d.x]; });
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select(container_id).append("svg")
         .attr("width", width + margin.right + margin.left)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
