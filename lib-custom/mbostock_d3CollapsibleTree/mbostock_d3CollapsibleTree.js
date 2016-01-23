@@ -189,4 +189,7 @@ function createD3CollapsibleDecisionTree(container_querySelectorStr, dataInput, 
       }
       update(d);
     }
+
+    //CUSTOM
+    return svg;
 }
