@@ -10,7 +10,7 @@ function createD3CollapsibleDecisionTree(dataInput, inputType){
     }
 
     //This Library is based on mbostock d3CollapsibleTree
-    //CUSTOM modifications mades for dataInput
+    //CUSTOM modifications mades for dataInput and additional caption display
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
         width = 960 - margin.right - margin.left,
         height = 800 - margin.top - margin.bottom;
@@ -92,6 +92,21 @@ function createD3CollapsibleDecisionTree(dataInput, inputType){
           .text(function(d) { return d.name; })
           .style("fill-opacity", 1e-6);
 
+      //CUSTOM: additional caption display
+      nodeEnter.append("text")
+          .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+          .attr("dy", "1.35em")
+          .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+          .text(function(d) { return d.classLabelsText; })
+          .style("fill-opacity", 1e-6);
+      //CUSTOM: additional caption display
+      nodeEnter.append("text")
+          .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
+          .attr("dy", "2.35em")
+          .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+          .text(function(d) { return d.classMemberCount; })
+          .style("fill-opacity", 1e-6);
+
 
       // Transition nodes to their new position.
       var nodeUpdate = node.transition()
@@ -103,6 +118,9 @@ function createD3CollapsibleDecisionTree(dataInput, inputType){
           .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
       nodeUpdate.select("text")
+          .style("fill-opacity", 1);
+      //CUSTOM: additional caption display //the above select only selects the first "text"
+      nodeUpdate.selectAll("text")
           .style("fill-opacity", 1);
 
       // Transition exiting nodes to the parent's new position.
