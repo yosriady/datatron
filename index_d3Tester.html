@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.css">
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chrome <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <!-- Machine Learning  https://github.com/junku901/machine_learning -->
+    <script src="lib/machine_learning.min.js"></script>
+    <script src="lib/machineLearning_dataSample.js"></script>
+
+    <!-- D3JS -->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+        <!-- <script src="lib/d3.v3.min.js"></script> -->
+
+    <!-- Custom Library -->
+    <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.js"></script>
+
+    <!-- Scripts -->
+    <script src="src/convertData.js"></script>
+    <!-- <script src="src/index.js"></script> -->
+    <!-- <script type="js/visualize.js"></script> -->
+
+    <!-- D3 Tester Script -->
+    <script>
+var mlTreeData = JSON.parse('{"col":0,"value":"google","tb":{"col":3,"value":"21","tb":{"col":-1,"results":{"Premium":3}},"fb":{"col":2,"value":"no","tb":{"col":-1,"results":{"None":1}},"fb":{"col":-1,"results":{"Basic":1}}}},"fb":{"col":0,"value":"slashdot","tb":{"col":-1,"results":{"None":3}},"fb":{"col":2,"value":"yes","tb":{"col":-1,"results":{"Basic":4}},"fb":{"col":3,"value":"21","tb":{"col":-1,"results":{"Basic":1}},"fb":{"col":-1,"results":{"None":3}}}}}}');
+
+var d3TreeData = convertData_machineLearning_to_d3('tree', mlTreeData);
+createD3CollapsibleDecisionTree(d3TreeData);
+
+    </script>
+    
+  </body>
+</html>
