@@ -55,7 +55,7 @@ $(document).ready(function() {
 
             // Render Decision Tree;
             var d3TreeData = convertData_machineLearning_to_d3('tree', decisionTreeClassifier.tree);
-            createD3CollapsibleDecisionTree('#analyze-visualization', d3TreeData);
+            createD3CollapsibleDecisionTree('#analyze-visualization', d3TreeData,'data', true);
 
 
             // render selects with id select-COLUMNNAME and options
