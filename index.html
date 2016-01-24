@@ -8,9 +8,15 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
+
     <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.css">
+    <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3SVGGeometricZooming.css">
   </head>
   <body>
+    <!-- Splash Screen -->
+    <!-- <div class="splash" onclick="hideElem(this);"><div class="centerContainer"><h1 class="centerElement splashTitle">DataTron</h1></div></div>
+    <script>function hideElem(elem){elem.hidden = true;}</script> -->
+
     <!-- Start navbar -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
@@ -89,8 +95,13 @@
   <script type="text/javascript" src="https://cdn.datatables.net/s/bs/jq-2.1.4,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,fh-3.1.0,r-2.0.0/datatables.min.js"></script>
   <script type="text/javascript" src="http://filedropjs.org/filedrop.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
-  <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.js"></script>
   <script src="lib/machine_learning.min.js"></script>
+
+  <!-- Custom Library -->
+  <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3SVGGeometricZooming.js"></script>
+  <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.js"></script>
+
+  <!-- Scripts -->
   <script src="src/convertData.js"></script>
   <script src="src/index.js"></script>
   </body>
