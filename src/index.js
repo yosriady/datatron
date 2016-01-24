@@ -32,11 +32,6 @@ $(document).ready(function() {
             var table = tabulate("data", parsedData.slice(1), columns);
             $('#data').DataTable({pageLength: 25});
 
-            // Render charts
-            _.each(columns, function(columnName, columnIndex){
-                pieChart("#data-visualization", columnName, _.pluck(parsedData, columnIndex));
-            });
-
             // Train Naive Bayes classifier
             console.log(parsedData[0]);
             naiveBayesClassifier = new bayes.NaiveBayes({
@@ -45,6 +40,24 @@ $(document).ready(function() {
               verbose: true
             });
             naiveBayesClassifier.train();
+
+
+            console.log(naiveBayesClassifier.frequencies);
+            // Render charts
+            _.each(columns, function(columnName, columnIndex){
+                pieChart("#data-visualization", columnName, _.pluck(parsedData, columnIndex));
+
+                var freq = naiveBayesClassifier.frequencies[columnName];
+                var vals = _.keys(freq[_.keys(freq)[0]]);
+
+                var content = _.map(vals, function(valName, index){
+                  var data = _.union([valName], _.values(_.mapObject(freq, function(o){return o[valName]})));
+                  return data;
+                })
+                console.log(content);
+
+                barChart('#data-visualization', columnName, content);
+            });
 
             // Train Decision Tree
             var dtDatas = _.map(parsedData.slice(1), function(sample){return sample.slice(0, sample.length -1)});
@@ -142,6 +155,24 @@ function pieChart(container_id, columnName, columnValues){
         }
     });
     return chart;
+}
+
+function barChart(container_id, columnName, columns) {
+  var chartContainer = d3.select(container_id)
+                       .append("div").attr("id", ("bar-chart-"+columnName));
+  var chart = c3.generate({
+      bindto: ('#bar-chart-'+columnName),
+      data: {
+          columns: columns,
+          type: 'bar'
+      },
+      bar: {
+          width: {
+              ratio: 0.5 // this makes bar width 50% of length between ticks
+          }
+      }
+  });
+  return chart;
 }
 
 // Table generator
