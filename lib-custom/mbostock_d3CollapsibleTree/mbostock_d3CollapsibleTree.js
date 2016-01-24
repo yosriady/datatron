@@ -16,8 +16,8 @@ function createD3CollapsibleDecisionTree(container_querySelectorStr, dataInput, 
     //This Library is based on mbostock d3CollapsibleTree
     //CUSTOM modifications mades for dataInput and additional caption display
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
-        width = 960 - margin.right - margin.left,
-        height = 800 - margin.top - margin.bottom;
+        width = 10000 - margin.right - margin.left,  //### //originally 960
+        height = 10000 - margin.top - margin.bottom; //### //originally 800
 
     var i = 0,
         duration = 750,
