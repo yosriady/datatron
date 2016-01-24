@@ -27,6 +27,7 @@
     "jquery": "^2.2.0",
     "machine_learning": "0.0.8",
     "node-bayes": "git+ssh://git@github.com/Leventhan/node-bayes.git",
+    "please-wait": "0.0.5",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

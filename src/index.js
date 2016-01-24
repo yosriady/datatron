@@ -3,6 +3,16 @@ var d3 = require('d3');
 var bayes = require('node-bayes');
 var ml = require('machine_learning');
 
+window.loading_screen = pleaseWait({
+  logo: "assets/images/logo.png",
+  backgroundColor: '#fff',
+  loadingHtml: "<h5><strong>DataTron.</strong> It's like having your own data science team!</h5><button class='btn btn-lg btn-success' id='get-started'>Get Started</button>"
+});
+
+$('#get-started').click(function(){
+  window.loading_screen.finish();
+})
+
 $(document).ready(function() {
     var zone = new FileDrop('dropzone', {input: false});
     var rawData;
@@ -131,7 +141,6 @@ $(document).ready(function() {
       var answerHeading = d3.select("#predict-visualization").append("h3").attr("class", "text-center").text(sample);
 
     });
-
 });
 
 function select(columnName, values) {
