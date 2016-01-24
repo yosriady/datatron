@@ -1,6 +1,6 @@
 //http://bl.ocks.org/mbostock/3680999
 
-function addD3SVGZoom(svg){
+function addD3SVGZoom(svg, mouseZoomArea_width,mouseZoomArea_height){
   // var svg = d3.select("body").append("svg")
   //     .attr("width", width)
   //     .attr("height", height)
@@ -23,14 +23,33 @@ function addD3SVGZoom(svg){
   //   svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   // }
 
+  //START
+  svg.call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoom));
 
-  svg.call(d3.behavior.zoom().scaleExtent([0, 8]).on("zoom", zoom))
-  .append("g");
+  // //Getting the direct child "g" of the main "svg"
+  // svg.selectAll('g').each(function(d,i){
+  //   // console.log("svg.selectAll('g') EACH",d); //Strangely, select and selectAll selects 2 levels down, instead of the usual expected 1 level down
+  // });
+  // console.log("svg.select('g')", svg.select('g'), svg.select('g')[0].parentNode);
+  // console.log("d3.select('g') ", d3.select('g'));
+  // console.log("svg.selectAll  ", svg.selectAll('g'), svg.selectAll('g')[0].parentNode);
+  // //Getting the correct element by getting the parent first then using d3.select
+  // console.log("select the svg ", d3.select(svg[0][0].parentNode).attr('width'));
+  // //root svg width is defined and has a value from the start, while tightestContainer-g width is generated and does not have a value until all attributes are generated
+  // console.log( d3.select(svg.selectAll('g')[0].parentNode).attr('width')); //therefore this will give null at first (at the point when nothing has been generated)
+  // console.log( d3.select(svg[0][0].parentNode).attr('width'));
 
-  // svg.append("rect")
-  //     .attr("class", "overlay")
-  //     .attr("width", width)
-  //     .attr("height", height);
+  // var tightestContainer = svg.selectAll('g')[0].parentNode; //TEMPORARY
+  // var tightestContainerBBox = tightestContainer.getBBox(); //var tightestContainerBoundingRect = tightestContainer.getBoundingClientRect();
+  var sizeDefinedD3Container = d3.select(svg[0][0].parentNode);
+
+  var width=mouseZoomArea_width ||sizeDefinedD3Container.attr('width') ||tightestContainerBBox.width;  var height=mouseZoomArea_height ||sizeDefinedD3Container.attr('height') ||tightestContainerBBox.height;
+  svg.append('g')  //TEMPORARY //the svg from d3CollapsibleTree is at the level of one-appended-g, and the svg for d3SVGGeometricZooming is at the level of two-appended-g --> additional g-separation indicates that the rect (for zooming purposes) is clearly separate from the rest of the d3SVG
+    .append("rect")
+      .attr("class", "overlay") //this class "overlay" will work with CSS to make the rectangle transparent
+      .attr("width", width)
+      .attr("height", height);
+
 
   //get original transform
   //TEMPORARY: can only handle translate  //Future: can handle other types of transform
