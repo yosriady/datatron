@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3CollapsibleTree.css">
     <link rel="stylesheet" type="text/css" href="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3SVGGeometricZooming.css">
+    <link rel="stylesheet" type="text/css" href="src/please-wait.css">
   </head>
   <body>
     <!-- Splash Screen -->
@@ -31,8 +32,20 @@
             <li><a href="#predict" data-toggle="tab"><i class="fa fa-lightbulb-o"></i> Predict</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="fa fa-info-circle"></i> About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class='fa fa-share'></i> Share <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Export to PDF</a></li>
+                <li><a href="javascript:void(0)" onclick="alert('http://datatron.herokuapp.com/share/1GCMHG')">Share link</a></li>
+              </ul>
+            </li>
+            <li><a href="#about" data-toggle="tab"><i class="fa fa-info-circle"></i> About</a></li>
           </ul>
+          <form class="navbar-form navbar-right" role="search" _lpchecked="1">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="Enter Share ID">
+                                </div>
+                              </form>
         </div>
       </div>
     </nav>
@@ -83,6 +96,16 @@
           <h3></h3>
         </div>
       </div>
+
+      <!-- About Tab -->
+      <div class="tab-pane fade" id="about">
+        DataTron is a modern data science/machine learning toolkit for normal people like you and me. Our vision is to make data science accessible to all, including your parents!. DataTron is built on Electron, Node, and Javascript.
+
+        <div id="about-tab" class='col-xs-12 well'>
+
+        </div>
+
+      </div>
     </div>
   </div>
   </div>
@@ -96,6 +119,10 @@
   <script type="text/javascript" src="http://filedropjs.org/filedrop.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
   <script src="lib/machine_learning.min.js"></script>
+<<<<<<< HEAD
+=======
+  <script src="src/please-wait.min.js"></script>
+>>>>>>> c9d25fcc474aba07937152b675a0283620776e87
 
   <!-- Custom Library -->
   <script src="lib-custom/mbostock_d3CollapsibleTree/mbostock_d3SVGGeometricZooming.js"></script>
