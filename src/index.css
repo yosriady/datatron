@@ -12,7 +12,7 @@
   width:100%; height:100%;
   position:absolute; z-index:999;
 
-  background: url(img/botsquad.png) no-repeat center center fixed; 
+  background: url(../img/botsquad.png) no-repeat center center fixed white; 
   /*-webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -21,5 +21,4 @@
   -moz-background-size: 100%;
   -o-background-size: 100%;
   background-size: 100%;
-
 }
